@@ -239,77 +239,6 @@
       line-height: 1.8;
     }
 
-    /* FEATURES */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      margin-top: 3.5rem;
-    }
-
-    .feature {
-      background: var(--navy);
-      padding: 2.5rem 2rem;
-      transition: background .3s;
-    }
-    .feature:hover { background: var(--navy-mid); }
-
-    .feature-icon {
-      width: 46px;
-      height: 46px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      color: var(--gold);
-    }
-
-    .feature h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: .75rem;
-    }
-    .feature p { font-size: 14px; color: var(--muted); line-height: 1.8; }
-
-    /* HOW IT WORKS */
-    .how-it-works { background: var(--navy-mid); }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
-      margin-top: 3.5rem;
-    }
-
-    .step { position: relative; padding-top: 3.5rem; }
-
-    .step-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 88px;
-      font-weight: 700;
-      color: var(--border);
-      position: absolute;
-      top: 0;
-      left: 0;
-      line-height: 1;
-      user-select: none;
-    }
-
-    .step-line { width: 100%; height: 1px; background: var(--border); margin: 1.5rem 0; }
-
-    .step h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: .75rem;
-    }
-    .step p { font-size: 14px; color: var(--muted); line-height: 1.8; }
-
     /* PRICING */
     .pricing { text-align: center; }
     .pricing .tag { justify-content: center; }
@@ -474,8 +403,6 @@
       }
       .nav-toggle { display: flex; }
       .btn-nav { display: none; }
-      .features-grid { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; gap: 2rem; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
       .stats { grid-template-columns: 1fr; }
       .stat { border-right: none; border-bottom: 1px solid var(--border); }
@@ -494,8 +421,6 @@
       <div class="logo-text">ENGINE <small>Invoice</small></div>
     </a>
     <ul id="nav-menu">
-      <li><a href="#features">Funciones</a></li>
-      <li><a href="#how">Cómo funciona</a></li>
       <li><a href="#pricing">Planes</a></li>
       <li><a href="#contact">Contacto</a></li>
     </ul>
@@ -546,82 +471,6 @@
       <div class="stat-label">Tiempo operativo mensual</div>
     </div>
   </div>
-
-  <section id="features">
-    <div class="tag">Funcionalidades</div>
-    <h2>Todo lo que necesitás para<br><em>controlar tus facturas</em></h2>
-    <p class="section-lead">Una plataforma diseñada para equipos de administración que quieren dejar de operar en planillas y empezar a tomar decisiones con datos.</p>
-    <div class="features-grid">
-      <div class="feature">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><path d="m9 16 2 2 4-4"/></svg>
-        </div>
-        <h3>Extracción con IA</h3>
-        <p>Cargá PDFs o imágenes de facturas y el sistema extrae automáticamente proveedor, CUIT, montos, fechas e ítems con alta precisión.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-        </div>
-        <h3>Validación automática</h3>
-        <p>Cruzamos los datos extraídos contra tu catálogo de productos y proveedores para detectar errores antes de que lleguen a contabilidad.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
-        <h3>Integración con ERPs</h3>
-        <p>Conectamos con Fudo, SAP y sistemas a medida vía API REST. Los datos fluyen sin intervención manual hacia donde los necesitás.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <h3>Dashboards en tiempo real</h3>
-        <p>Visualizá el estado de cada factura, totales por proveedor y alertas de vencimiento desde un panel centralizado.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h3>Seguridad enterprise</h3>
-        <p>Encriptación end-to-end, control de accesos por rol y auditoría completa de cada operación realizada en la plataforma.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </div>
-        <h3>Exportación flexible</h3>
-        <p>Descargá reportes en Excel, CSV o JSON. Compatible con los formatos requeridos por contadores y organismos fiscales argentinos.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="how-it-works" id="how">
-    <div class="tag">Proceso</div>
-    <h2>Tres pasos hacia la <em>eficiencia total</em></h2>
-    <p class="section-lead">Implementación sin fricción. Empezás a ver resultados desde el primer día, sin cambiar tu flujo de trabajo actual.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-line"></div>
-        <h3>Cargá tus facturas</h3>
-        <p>Subí PDFs, fotos o conectá tu casilla de mail. El sistema procesa cualquier formato y proveedor, sin configuración previa ni entrenamiento.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-line"></div>
-        <h3>La IA extrae y valida</h3>
-        <p>En segundos tenés todos los campos clave extraídos y verificados contra tus proveedores y productos registrados en el sistema.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-line"></div>
-        <h3>Registrá y decidí</h3>
-        <p>Aprobá con un clic y los datos se envían al ERP. Tu contador recibe el reporte listo. Vos tenés el dashboard actualizado al instante.</p>
-      </div>
-    </div>
-  </section>
 
   <section id="pricing" class="pricing">
     <div class="tag">Planes</div>
@@ -705,7 +554,7 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.feature, .step, .plan, .stat').forEach(el => {
+    document.querySelectorAll('.plan, .stat').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
       el.style.transition = 'opacity .6s ease, transform .6s ease';
@@ -714,4 +563,3 @@
   </script>
 </body>
 </html>
-
