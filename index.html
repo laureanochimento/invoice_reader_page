@@ -177,46 +177,43 @@
     }
     .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-    .hero-visual {
+    /* KPI ORBITAL */
+    .kpi-orbital {
       position: absolute;
       right: 5%;
       top: 50%;
       transform: translateY(-50%);
-      opacity: 0.08;
-      z-index: 0;
+      width: 360px;
+      height: 360px;
+      z-index: 1;
     }
-    .hero-visual svg { width: 380px; height: 380px; }
+    .kpi-orbital svg { width: 100%; height: 100%; overflow: visible; }
 
-    /* STATS */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      background: var(--navy-mid);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    .orbit-ring {
+      animation: orbit-spin 12s linear infinite;
+      transform-origin: 180px 180px;
     }
-
-    .stat {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      border-right: 1px solid var(--border);
+    .bubble-group {
+      animation: orbit-spin 12s linear infinite;
+      transform-origin: 180px 180px;
     }
-    .stat:last-child { border-right: none; }
-
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 52px;
-      font-weight: 600;
-      color: var(--gold);
-      line-height: 1;
+    .bubble-counter {
+      animation: counter-spin 12s linear infinite;
     }
-    .stat-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: .6rem;
+    @keyframes orbit-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
+    @keyframes counter-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(-360deg); }
+    }
+    @keyframes kpi-pop {
+      0%   { opacity: 0; transform: scale(.75); }
+      60%  { transform: scale(1.06); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .kpi-pop { animation: kpi-pop .45s ease forwards; }
 
     /* SECTIONS */
     section { padding: 7rem 5%; }
@@ -404,10 +401,7 @@
       .nav-toggle { display: flex; }
       .btn-nav { display: none; }
       .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
-      .stats { grid-template-columns: 1fr; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat:last-child { border-bottom: none; }
-      .hero-visual { display: none; }
+      .kpi-orbital { display: none; }
       footer { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
     }
@@ -441,36 +435,91 @@
         <a href="#how" class="btn-ghost">Ver cómo funciona</a>
       </div>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="20" width="340" height="340" stroke="#C8A97E" stroke-width="1"/>
-        <rect x="50" y="50" width="280" height="280" stroke="#C8A97E" stroke-width="0.5" stroke-dasharray="6 4"/>
-        <line x1="50" y1="110" x2="330" y2="110" stroke="#C8A97E" stroke-width="0.5"/>
-        <line x1="50" y1="150" x2="330" y2="150" stroke="#C8A97E" stroke-width="0.5"/>
-        <line x1="50" y1="190" x2="330" y2="190" stroke="#C8A97E" stroke-width="0.5"/>
-        <line x1="50" y1="230" x2="330" y2="230" stroke="#C8A97E" stroke-width="0.5"/>
-        <line x1="50" y1="270" x2="330" y2="270" stroke="#C8A97E" stroke-width="0.5"/>
-        <circle cx="190" cy="190" r="80" stroke="#C8A97E" stroke-width="1"/>
-        <circle cx="190" cy="190" r="40" stroke="#C8A97E" stroke-width="0.5"/>
-        <circle cx="190" cy="190" r="4" fill="#C8A97E"/>
+    <!-- KPI ORBITAL -->
+    <div class="kpi-orbital" aria-label="Métricas clave">
+      <svg viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" id="kpi-svg">
+
+        <!-- Grid de fondo sutil -->
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(200,169,126,0.08)" stroke-width="1"/>
+          </pattern>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <rect width="360" height="360" fill="url(#grid)"/>
+
+        <!-- Círculo orbit exterior (punteado, gira) -->
+        <circle class="orbit-ring" cx="180" cy="180" r="140"
+          stroke="rgba(200,169,126,0.25)" stroke-width="1" stroke-dasharray="6 6" fill="none"/>
+
+        <!-- Líneas conectoras (3 radios, giran) -->
+        <g class="orbit-ring">
+          <!-- radio a burbuja 1 (top) -->
+          <line x1="180" y1="180" x2="180" y2="40" stroke="rgba(200,169,126,0.3)" stroke-width="1"/>
+          <!-- radio a burbuja 2 (bottom-right) -->
+          <line x1="180" y1="180" x2="301" y2="251" stroke="rgba(200,169,126,0.3)" stroke-width="1"/>
+          <!-- radio a burbuja 3 (bottom-left) -->
+          <line x1="180" y1="180" x2="59" y2="251" stroke="rgba(200,169,126,0.3)" stroke-width="1"/>
+        </g>
+
+        <!-- Burbujas (contrarotan para texto recto) -->
+        <!-- Burbuja 1: top -->
+        <g class="bubble-group" style="transform-origin:180px 180px">
+          <g class="bubble-counter" style="transform-origin:180px 40px">
+            <circle cx="180" cy="40" r="38" fill="rgba(13,27,46,0.95)" stroke="rgba(200,169,126,0.5)" stroke-width="1.5"/>
+            <text x="180" y="36" font-family="Cormorant Garamond, serif" font-size="18" font-weight="700"
+              fill="#C8A97E" text-anchor="middle" dominant-baseline="middle">98%</text>
+            <text x="180" y="51" font-family="Barlow, sans-serif" font-size="7.5" font-weight="400"
+              fill="#A8A098" text-anchor="middle" letter-spacing="1.5" text-transform="uppercase">PRECISIÓN</text>
+          </g>
+        </g>
+
+        <!-- Burbuja 2: bottom-right -->
+        <g class="bubble-group" style="transform-origin:180px 180px">
+          <g class="bubble-counter" style="transform-origin:301px 251px">
+            <circle cx="301" cy="251" r="38" fill="rgba(13,27,46,0.95)" stroke="rgba(200,169,126,0.5)" stroke-width="1.5"/>
+            <text x="301" y="247" font-family="Cormorant Garamond, serif" font-size="18" font-weight="700"
+              fill="#C8A97E" text-anchor="middle" dominant-baseline="middle">10×</text>
+            <text x="301" y="262" font-family="Barlow, sans-serif" font-size="7.5" font-weight="400"
+              fill="#A8A098" text-anchor="middle" letter-spacing="1.5">MÁS RÁPIDO</text>
+          </g>
+        </g>
+
+        <!-- Burbuja 3: bottom-left -->
+        <g class="bubble-group" style="transform-origin:180px 180px">
+          <g class="bubble-counter" style="transform-origin:59px 251px">
+            <circle cx="59" cy="251" r="38" fill="rgba(13,27,46,0.95)" stroke="rgba(200,169,126,0.5)" stroke-width="1.5"/>
+            <text x="59" y="247" font-family="Cormorant Garamond, serif" font-size="18" font-weight="700"
+              fill="#C8A97E" text-anchor="middle" dominant-baseline="middle">−80%</text>
+            <text x="59" y="262" font-family="Barlow, sans-serif" font-size="7.5" font-weight="400"
+              fill="#A8A098" text-anchor="middle" letter-spacing="1.5">TIEMPO OP.</text>
+          </g>
+        </g>
+
+        <!-- Centro: KPI activo en grande -->
+        <circle cx="180" cy="180" r="68" fill="rgba(27,42,74,0.9)" stroke="rgba(200,169,126,0.4)" stroke-width="1.5" filter="url(#glow)"/>
+        <circle cx="180" cy="180" r="58" fill="none" stroke="rgba(200,169,126,0.12)" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <!-- Texto central (lo maneja JS) -->
+        <g id="kpi-center">
+          <text id="kpi-num" x="180" y="172" font-family="Cormorant Garamond, serif" font-size="42" font-weight="700"
+            fill="#C8A97E" text-anchor="middle" dominant-baseline="middle">98%</text>
+          <text id="kpi-label" x="180" y="204" font-family="Barlow, sans-serif" font-size="9" font-weight="400"
+            fill="#A8A098" text-anchor="middle" letter-spacing="2">PRECISIÓN</text>
+        </g>
+
+        <!-- Indicador de progreso (arco) -->
+        <circle id="kpi-arc" cx="180" cy="180" r="68"
+          fill="none" stroke="#C8A97E" stroke-width="2.5" stroke-linecap="round"
+          stroke-dasharray="142 285" stroke-dashoffset="-71"
+          style="transform:rotate(-90deg); transform-origin:180px 180px; transition: stroke-dasharray 0.8s ease;"/>
+
       </svg>
     </div>
   </section>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">98%</div>
-      <div class="stat-label">Precisión en extracción</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">10×</div>
-      <div class="stat-label">Más rápido que el proceso manual</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">−80%</div>
-      <div class="stat-label">Tiempo operativo mensual</div>
-    </div>
-  </div>
 
   <section id="pricing" class="pricing">
     <div class="tag">Planes</div>
@@ -540,11 +589,13 @@
   </footer>
 
   <script>
+    // Nav mobile
     const toggle = document.getElementById('nav-toggle');
     const menu = document.getElementById('nav-menu');
     toggle.addEventListener('click', () => menu.classList.toggle('open'));
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
 
+    // Scroll animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -553,13 +604,48 @@
         }
       });
     }, { threshold: 0.1 });
-
-    document.querySelectorAll('.plan, .stat').forEach(el => {
+    document.querySelectorAll('.plan').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
       el.style.transition = 'opacity .6s ease, transform .6s ease';
       observer.observe(el);
     });
+
+    // KPI orbital — rotación del centro
+    const kpis = [
+      { num: '98%',  label: 'PRECISIÓN',   arc: 142 },
+      { num: '10×',  label: 'MÁS RÁPIDO',  arc: 213 },
+      { num: '−80%', label: 'TIEMPO OP.',  arc: 285 },
+    ];
+    let current = 0;
+    const numEl   = document.getElementById('kpi-num');
+    const labelEl = document.getElementById('kpi-label');
+    const arcEl   = document.getElementById('kpi-arc');
+
+    function updateKPI(idx) {
+      const k = kpis[idx];
+
+      // Fade out
+      numEl.style.transition   = 'opacity .2s';
+      labelEl.style.transition = 'opacity .2s';
+      numEl.style.opacity   = '0';
+      labelEl.style.opacity = '0';
+
+      setTimeout(() => {
+        numEl.textContent   = k.num;
+        labelEl.textContent = k.label;
+        // Arco: avanza 1/3, 2/3, 3/3
+        arcEl.style.strokeDasharray = `${k.arc} 285`;
+
+        numEl.style.opacity   = '1';
+        labelEl.style.opacity = '1';
+      }, 220);
+    }
+
+    setInterval(() => {
+      current = (current + 1) % kpis.length;
+      updateKPI(current);
+    }, 3000);
   </script>
 </body>
 </html>
